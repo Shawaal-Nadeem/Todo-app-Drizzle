@@ -6,7 +6,7 @@ export const Todos=()=>{
     const [todoItem,setTodoItem]=useState('Empty');
     const [todoList,setTodoList]=useState([]);
     const [handleFetching,setHandleFetching]=useState(false);
-
+    // GET
     useEffect(()=>{
        async function getTodo(){
         const response=await fetch('/api/todo');
@@ -21,7 +21,7 @@ export const Todos=()=>{
     const handleTodoItem=(content:string)=>{
         setTodoItem(content);
     }
-    
+    // POST
     const addTodo= async()=>{
         const response =await fetch('/api/todo',{
             method:"POST",
@@ -37,7 +37,7 @@ export const Todos=()=>{
             setHandleFetching(false);
         }
     }
-
+    // PUT
     const editTodo= async(id:number)=>{
         const response =await fetch('/api/todo',{
             method:"PUT",
@@ -53,7 +53,7 @@ export const Todos=()=>{
             setHandleFetching(false);
         }
     }
-
+    // Delete
     const deleteTodo= async(id:number)=>{
         const response =await fetch('/api/todo',{
             method:"DELETE",
