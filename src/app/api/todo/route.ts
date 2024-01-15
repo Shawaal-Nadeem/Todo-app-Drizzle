@@ -2,6 +2,7 @@ import { NextRequest,NextResponse } from "next/server";
 import { sql } from "@vercel/postgres";
 import { db } from "@/drizzle/drizzle";
 import { todos } from "@/drizzle/schema";
+import { eq } from "drizzle-orm";
 
 // GET Request
 export async function GET(){
@@ -27,9 +28,12 @@ export async function POST(request:NextRequest){
 // PUT Request
 export async function PUT(request:NextRequest){
     const req=await request.json();
-    console.log(req);
-    const { rows } = await sql`UPDATE todos SET taskName = ${req.todoItem} WHERE id = ${req.id}`;
-    console.log(rows);
+    console.log(req.todoItem);
+    await db.update(todos)
+  .set({ taskname: req.todoItem })
+  .where(eq(todos.id, req.id));
+    // const { rows } = await sql`UPDATE todos SET taskName = ${req.todoItem} WHERE id = ${req.id}`;
+    // console.log(rows);
     return NextResponse.json({message:"Todo Edit successfully."})
 }
 
@@ -37,7 +41,8 @@ export async function PUT(request:NextRequest){
 export async function DELETE(request:NextRequest){
     const req=await request.json();
     console.log(req);
-    const { rows } = await sql`DELETE FROM todos WHERE id = ${req.id}`;
-    console.log(rows);
+    await db.delete(todos).where(eq(todos.id, req.id));
+    // const { rows } = await sql`DELETE FROM todos WHERE id = ${req.id}`;
+    // console.log(rows);
     return NextResponse.json({message:"Todo Delete successfully."})
 }
