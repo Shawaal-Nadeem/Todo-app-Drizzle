@@ -87,7 +87,7 @@ Click on Storage Tab and select database
 -1 click on Query Tab and create SQL Table using run this query
 
 ```sql
-create Table todo(
+create Table todos(
 id serial primary key,
 taskname varchar(255),
 )
